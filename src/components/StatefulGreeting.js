@@ -6,8 +6,9 @@ class StatefulGreeting extends React.Component {
         super(props);
         this.state = {
             introduction: "This is a prop from the constructor",
-            buttonText: "Click me"
-
+            buttonText: "Click me",
+            buttonCount: 0,
+            isClicked: false // Initialize isClicked in the state
         };
     }
 
@@ -15,8 +16,11 @@ class StatefulGreeting extends React.Component {
         this.setState((prevState) => ({
             introduction: prevState.isClicked ? "This is a prop from the constructor" : "Goodbye!",
             buttonText: prevState.isClicked ? "Click me" : "You clicked me!",
-            isClicked: !prevState.isClicked
-        }));
+            isClicked: !prevState.isClicked, // toggles the isClicked state
+            buttonCount: this.state.buttonCount + 1
+        }), () => {
+            console.log("new button-state is: ", this.state.buttonText);
+        });
         console.log("button is clicked!");
     }
 
@@ -24,7 +28,9 @@ class StatefulGreeting extends React.Component {
         return (
             <div>
                 <h1> {this.state.introduction} {this.props.greeting} </h1>
-                <button onClick={() => this.handleClick()}> {this.state.buttonText} </button>
+                <button onClick={this.handleClick}> {this.state.buttonText} </button>
+                <br />
+                <button> {this.state.buttonCount} </button>
             </div>
         )
     }
