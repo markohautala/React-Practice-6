@@ -11,8 +11,13 @@ class StatefulGreeting extends React.Component {
         };
     }
 
-    handleClick() {
-        console.log("button is clicked!")
+    handleClick = () => {
+        this.setState((prevState) => ({
+            introduction: prevState.isClicked ? "This is a prop from the constructor" : "Goodbye!",
+            buttonText: prevState.isClicked ? "Click me" : "You clicked me!",
+            isClicked: !prevState.isClicked
+        }));
+        console.log("button is clicked!");
     }
 
     render() {
